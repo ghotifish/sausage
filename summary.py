@@ -6,9 +6,29 @@ Main method is writeSummary()
 
 import sys
 from os import path
+import inspect
+from warnings import warn
 from textwrap import dedent
 
 __author__ = 'Marc Schulder'
+
+
+# def _getCallingFunction():
+#     curframe = inspect.currentframe()
+#     try:
+#         outerframes = inspect.getouterframes(curframe, 3)
+#         # for f in outerframes[2]:
+#         #     print f
+#         parentframe, _, _, parentname, _, _ = outerframes[2]
+#         print parentname, parentframe
+#         #print parentframe.__dict__.itervalues()
+#
+#         frm = inspect.stack()[1]
+#         mod = inspect.getmodule(frm[0])
+#         print '[%s] %s' % (mod.__name__, frm)
+#         return
+#     finally:
+#         del curframe
 
 
 def writeSummary(func, outputDir, *args):
@@ -54,7 +74,7 @@ def getSummary(func, *args):
     summary.append('            {0}()'.format(func.func_name))
     summary.append('')
     
-    for block in args:
+    for i, block in enumerate(args):
         if isinstance(block, basestring):
             summary.append(block)
         elif len(block) == 0:
@@ -70,14 +90,14 @@ def getSummary(func, *args):
             # Write lines
             head = block[0]
             indentstr = ' '*(len(head)+2)
-            for i, line in enumerate(blocklines):
-                if i == 0:
+            for j, line in enumerate(blocklines):
+                if j == 0:
                     summary.append('{0}: {1}'.format(head, line))
                 else:
                     summary.append('{0}{1}'.format(indentstr, line))
             summary.append('')
         else:
-            print "WARNING: Unexpected format in args of getSummary"
+            warn("Unexpected format in args[{0}] of getSummary: {1}".format(i, block))
 
     # Return summary as a single string
     text = '\n'.join(summary)
