@@ -6,7 +6,6 @@ Main method is writeSummary()
 
 import sys
 from os import path
-import inspect
 from textwrap import dedent
 
 __author__ = 'Marc Schulder'
@@ -22,9 +21,6 @@ def writeSummary(func, outputDir, *args):
     :param args:
     :return:
     """
-
-    return
-
     summary = getSummary(func, *args)
 
     # Determine file name
