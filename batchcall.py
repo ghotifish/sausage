@@ -4,6 +4,7 @@ Methods to support the running of batch experiments in Python.
 Main method is runExperimentScriptCall()
 """
 
+from __future__ import print_function
 import sys
 from os import path
 import re
@@ -63,7 +64,7 @@ def runExperimentScriptCall(args=None, moduleName='__main__', funcNamestart=DEFA
 
     experiments = getExperimentFunctions(moduleName, funcNamestart=funcNamestart)
     if len(args) <= 1:
-        print getExperimentUsage(experiments, scriptname=args[0])
+        print(getExperimentUsage(experiments, scriptname=args[0]))
     else:
         runExperimentSelection(experiments, args[1:], verbose=verbose)
 
@@ -95,24 +96,24 @@ def runExperimentSelection(experiments, args=None, verbose=True):
     for mode in modes:
         if mode in experiments:
             if verbose:
-                print "Running experiment", mode
+                print("Running experiment", mode)
             experiments[mode]()
         elif mode == 'all':
             if verbose:
-                print "Running all experiments"
+                print("Running all experiments")
             for thismode, experiment in sorted(experiments.items()):
                 if verbose:
-                    print "Running experiment", thismode
+                    print("Running experiment", thismode)
                 experiment()
         else:
             if verbose:
-                print "Experiment {0} does not exist.".format(mode)
+                print("Experiment {0} does not exist.".format(mode))
 
     if verbose:
         if len(modes) == 1 and 'all' not in modes:
-            print "Finished running experiment"
+            print("Finished running experiment")
         else:
-            print "Finished running all experiments"
+            print("Finished running all experiments")
 
 
 def getExperimentUsage(experiments, scriptname=None):
@@ -207,7 +208,7 @@ def getSummary(func, *args):
                     summary.append('{0}{1}'.format(indentstr, line))
             summary.append('')
         else:
-            print "WARNING: Unexpected format in args of getSummary"
+            print("WARNING: Unexpected format in args of getSummary")
 
     # Return summary as a single string
     text = '\n'.join(summary)
