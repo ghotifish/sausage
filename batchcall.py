@@ -62,7 +62,7 @@ def runExperimentScriptCall(args=None, moduleName='__main__', funcNamestart=DEFA
 
     experiments = getExperimentFunctions(moduleName, funcNamestart=funcNamestart)
     if len(args) <= 1:
-        print(getExperimentUsage(experiments, scriptname=args[0]))
+        print(getExperimentUsage(experiments, scriptpath=args[0]))
     else:
         runExperimentSelection(experiments, args[1:], verbose=verbose)
 
@@ -114,15 +114,16 @@ def runExperimentSelection(experiments, args=None, verbose=True):
             print("Finished running all experiments")
 
 
-def getExperimentUsage(experiments, scriptname=None):
+def getExperimentUsage(experiments, scriptpath=None):
     """
     Get default info for experiment ID based script calls.
     :param experiments: Dictionary of experiment functions as returned by getExperimentFunctions()
-    :param scriptname: Name of the python script. If None (default), name is taken from path
+    :param scriptpath: Name of the python script. If None (default), name is taken from path
     :return: A multiline string containing the usage information.
     """
-    if scriptname is None:
-        scriptname = path.split(sys.argv[0])[1]
+    if scriptpath is None:
+        scriptpath = sys.argv[0]
+    scriptname = path.split(scriptpath)[1]
 
     expString = ', '.join(sorted(experiments, key=_natural_key))
 
