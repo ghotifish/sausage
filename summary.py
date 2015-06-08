@@ -6,29 +6,10 @@ Main method is writeSummary()
 
 import sys
 from os import path
-import inspect
+from inspect import getdoc
 from warnings import warn
-from textwrap import dedent
 
 __author__ = 'Marc Schulder'
-
-
-# def _getCallingFunction():
-#     curframe = inspect.currentframe()
-#     try:
-#         outerframes = inspect.getouterframes(curframe, 3)
-#         # for f in outerframes[2]:
-#         #     print f
-#         parentframe, _, _, parentname, _, _ = outerframes[2]
-#         print parentname, parentframe
-#         #print parentframe.__dict__.itervalues()
-#
-#         frm = inspect.stack()[1]
-#         mod = inspect.getmodule(frm[0])
-#         print '[%s] %s' % (mod.__name__, frm)
-#         return
-#     finally:
-#         del curframe
 
 
 def writeSummary(func, outputDir, *args):
@@ -60,12 +41,11 @@ def writeSummary(func, outputDir, *args):
 def getSummary(func, *args):
     summary = list()
     
-    # Process doc string
-    doc = func.func_doc
-    doc = dedent(doc)
-    doc = doc.strip('\n')
-    summary.append(doc)
-    summary.append('')
+    # Get doc string
+    doc = getdoc(func)
+    if doc is not None:
+        summary.append(doc)
+        summary.append('')
     
     # Process data information
     scriptdir, scriptname = path.split(sys.argv[0])
