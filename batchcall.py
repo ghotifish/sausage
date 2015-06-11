@@ -79,10 +79,12 @@ def runExperimentSelection(experiments, args=None, verbose=True):
     """
     ALL_MODE = 'all'
     DEFAULT_MODE = ALL_MODE
+    experiments = {s.lower():f for s, f in experiments.iteritems()}  # Ensure experiment names are lowercase
+
     modes = list()
     if args is not None and len(args) >= 1:
         for arg in args:
-            mode = arg.lower()
+            mode = arg.lower()  # Ensure input is lowercase
             if mode == ALL_MODE:
                 modes = [ALL_MODE]
                 break
@@ -146,4 +148,4 @@ def getExperimentFunctions(moduleName, funcNamestart=DEFAULT_FUNC_NAMESTART):
         funcNamestart = ''
     genericLength = len(funcNamestart)
     functions = _list_functions(sys.modules[moduleName])
-    return {func.__name__[genericLength:]: func for func in functions if func.__name__.startswith(funcNamestart)}
+    return {func.__name__[genericLength:].lower(): func for func in functions if func.__name__.startswith(funcNamestart)}
