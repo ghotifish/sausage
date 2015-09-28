@@ -75,16 +75,11 @@ def getSummary(func, *args):
             # Write lines
             head = block[0]
             indentstr = ' '*(len(head)+2)
-            print "x Processing blocklines"
 
             for j, line in enumerate(blocklines):
-                print line
                 if j == 0:
-                    print "x h", head
-                    print "x", j, line
                     summary.append('{0}: {1}'.format(head, line))
                 else:
-                    print "x", j, line
                     summary.append('{0}{1}'.format(indentstr, line))
             summary.append('')
         else:
