@@ -63,17 +63,28 @@ def getSummary(func, *args):
             # Flatten list
             blocklines = list()
             for item in block[1:]:
-                if isinstance(item, basestring):
-                    blocklines.append(item)
-                else:
+                if isinstance(item, basestring):  # Add string
+                    item = item.strip()
+                    if '\n' in item:  # String is single line
+                        itemlines = [s.strip() for s in item.split('\n')]
+                        blocklines.extend(itemlines)
+                    else:  # String is multiline
+                        blocklines.append(item)
+                else:  # Add iterables
                     blocklines.extend(item)
             # Write lines
             head = block[0]
             indentstr = ' '*(len(head)+2)
+            print "x Processing blocklines"
+
             for j, line in enumerate(blocklines):
+                print line
                 if j == 0:
+                    print "x h", head
+                    print "x", j, line
                     summary.append('{0}: {1}'.format(head, line))
                 else:
+                    print "x", j, line
                     summary.append('{0}{1}'.format(indentstr, line))
             summary.append('')
         else:
