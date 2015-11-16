@@ -1,9 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 Methods to support the running of batch experiments in Python.
 
 Main method is runExperimentScriptCall()
 """
-
 from __future__ import print_function
 import sys
 from os import path
@@ -11,6 +12,7 @@ import re
 import inspect
 
 __author__ = 'Marc Schulder'
+
 
 DEFAULT_FUNC_NAMESTART = "runExperiment"
 
@@ -79,7 +81,7 @@ def runExperimentSelection(experiments, args=None, verbose=True):
     """
     ALL_MODE = 'all'
     DEFAULT_MODE = ALL_MODE
-    experiments = {s.lower():f for s, f in experiments.iteritems()}  # Ensure experiment names are lowercase
+    experiments = {s.lower(): f for s, f in experiments.iteritems()}  # Ensure experiment names are lowercase
 
     modes = list()
     if args is not None and len(args) >= 1:
@@ -146,6 +148,6 @@ def getExperimentFunctions(moduleName, funcNamestart=DEFAULT_FUNC_NAMESTART):
     """
     if funcNamestart is None:
         funcNamestart = ''
-    genericLength = len(funcNamestart)
+    genericLen = len(funcNamestart)
     functions = _list_functions(sys.modules[moduleName])
-    return {func.__name__[genericLength:].lower(): func for func in functions if func.__name__.startswith(funcNamestart)}
+    return {func.__name__[genericLen:].lower(): func for func in functions if func.__name__.startswith(funcNamestart)}
