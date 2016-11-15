@@ -77,6 +77,7 @@ def runExperimentSelection(experiments, args=None, verbose=True):
     :param experiments: A dict mapping experiment names (strings) to their run functions.
                         The run functions should require no further arguments
     :param args: List of experiment names that should be run.
+    :param verbose: If true prints information about which experiment is run at the time.
     :return:
     """
     ALL_MODE = 'all'
@@ -103,7 +104,7 @@ def runExperimentSelection(experiments, args=None, verbose=True):
         elif mode == 'all':
             if verbose:
                 print("Running all experiments")
-            for thismode, experiment in sorted(experiments.items()):
+            for thismode, experiment in sorted(experiments.items(), key=lambda (k, v): _natural_key(k)):
                 if verbose:
                     print("Running experiment", thismode)
                 experiment()
