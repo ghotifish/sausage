@@ -107,6 +107,7 @@ def runExperimentSelection(experiments, args=None, verbose=True):
             for thismode, experiment in sorted(experiments.items(), key=lambda (k, v): _natural_key(k)):
                 if verbose:
                     print("Running experiment", thismode)
+                print(thismode)
                 experiment()
         else:
             if verbose:
@@ -151,4 +152,5 @@ def getExperimentFunctions(moduleName, funcNamestart=DEFAULT_FUNC_NAMESTART):
         funcNamestart = ''
     genericLen = len(funcNamestart)
     functions = _list_functions(sys.modules[moduleName])
-    return {func.__name__[genericLen:].lower(): func for func in functions if func.__name__.startswith(funcNamestart)}
+    return {func.__name__[genericLen:].lower(): func for func in functions if
+            func.__name__.startswith(funcNamestart) and func.__name__ != funcNamestart}
